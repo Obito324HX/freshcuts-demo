@@ -1,515 +1,1049 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FreshCuts — Barbershop, Cairo Road, Lusaka</title>
-<meta name="description" content="FreshCuts Barbershop on Cairo Road, Lusaka. Fresh fades, sharp lineups, book your slot on WhatsApp."/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FreshCuts Barbershop — Lusaka, Zambia</title>
+  <meta name="description" content="Lusaka's cleanest cuts. FreshCuts Barbershop on Cairo Road — fades, shape-ups, beard trims. Book via WhatsApp."/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  :root{
-    --charcoal:#1C1815;
-    --charcoal-2:#252019;
-    --bone:#F2EDE4;
-    --bone-dim:#D8D0C0;
-    --red:#C8453D;
-    --red-dim:#9C332D;
-    --brass:#C99A3F;
-    --green:#2F4538;
-    --green-light:#496B57;
-    --ink:#0F0D0B;
-  }
+    :root {
+      --black:   #080A0C;
+      --dark:    #0E1114;
+      --card:    #141820;
+      --border:  #1C2230;
+      --border2: #28334A;
+      --muted:   #4A5668;
+      --dim:     #7A8A9E;
+      --light:   #C4D0DE;
+      --white:   #EAF0F8;
+      --gold:    #D4A843;
+      --gold2:   #B88C2E;
+      --gold-glow: rgba(212,168,67,0.12);
+      --green:   #25D366;
+      --mono: 'Space Grotesk', sans-serif;
+    }
 
-  html{scroll-behavior:smooth;}
+    html { scroll-behavior: smooth; }
 
-  body{
-    background:var(--bone);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    line-height:1.6;
-    overflow-x:hidden;
-  }
+    body {
+      background: var(--black);
+      color: var(--light);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-  h1,h2,h3,.display{
-    font-family:'Fraunces',serif;
-    letter-spacing:-0.01em;
-  }
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #1C2230 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  /* ───── QUEUE TICKER (signature element) ───── */
-  .ticker-bar{
-    background:var(--ink);
-    color:var(--bone);
-    overflow:hidden;
-    white-space:nowrap;
-    border-bottom:1px solid #000;
-  }
+    * { position: relative; z-index: 1; }
 
-  .ticker-track{
-    display:inline-flex;
-    align-items:center;
-    gap:3rem;
-    padding:0.5rem 0;
-    animation:scroll-left 22s linear infinite;
-  }
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(8,10,12,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
 
-  .ticker-track span{
-    font-family:'Inter',sans-serif;
-    font-size:0.78rem;
-    font-weight:600;
-    letter-spacing:0.04em;
-    display:inline-flex;
-    align-items:center;
-    gap:0.5rem;
-  }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
 
-  .ticker-dot{
-    width:6px;height:6px;
-    border-radius:50%;
-    background:var(--green-light);
-    display:inline-block;
-    animation:blink 1.6s ease-in-out infinite;
-  }
+    .nav-logo em { color: var(--gold); font-style: normal; }
 
-  .ticker-dot.busy{ background:var(--red); }
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+      align-items: center;
+    }
 
-  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
-  @keyframes scroll-left{
-    0%{transform:translateX(0);}
-    100%{transform:translateX(-50%);}
-  }
+    .nav-links a {
+      color: var(--dim);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
 
-  /* ───── NAV ───── */
-  nav{
-    position:sticky;top:0;z-index:100;
-    background:var(--ink);
-    display:flex;align-items:center;justify-content:space-between;
-    padding:1.1rem 2.5rem;
-  }
+    .nav-links a:hover { color: var(--white); }
 
-  .logo{
-    font-family:'Fraunces',serif;
-    font-weight:700;
-    font-size:1.3rem;
-    color:var(--bone);
-  }
-  .logo span{color:var(--red);}
+    .nav-cta {
+      background: var(--gold) !important;
+      color: var(--black) !important;
+      padding: 0.45rem 1.2rem;
+      border-radius: 3px;
+      font-weight: 700 !important;
+      font-family: var(--mono);
+      transition: background 0.2s !important;
+    }
 
-  .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
-  .nav-links a{
-    color:var(--bone-dim);
-    text-decoration:none;
-    font-size:0.85rem;
-    font-weight:500;
-    transition:color 0.2s;
-  }
-  .nav-links a:hover{color:var(--bone);}
+    .nav-cta:hover { background: var(--gold2) !important; color: var(--black) !important; }
 
-  .nav-book{
-    background:var(--red);
-    color:var(--bone) !important;
-    padding:0.5rem 1.1rem;
-    border-radius:3px;
-    font-weight:600 !important;
-  }
-  .nav-book:hover{background:var(--red-dim);}
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
 
-  /* ───── HERO ───── */
-  .hero{
-    background:var(--ink);
-    color:var(--bone);
-    padding:5rem 2.5rem 6rem;
-    text-align:center;
-    position:relative;
-  }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--dim);
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
 
-  .hero::after{
-    content:'';
-    position:absolute;
-    bottom:0;left:0;right:0;
-    height:120px;
-    background:repeating-linear-gradient(135deg,var(--red) 0 28px, var(--green) 28px 56px, var(--brass) 56px 84px);
-    opacity:0.06;
-    pointer-events:none;
-  }
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 9rem 2rem 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-  .hero-tag{
-    display:inline-flex;
-    align-items:center;
-    gap:0.5rem;
-    border:1px solid var(--green-light);
-    color:var(--green-light);
-    font-size:0.72rem;
-    font-weight:600;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    padding:0.35rem 0.9rem;
-    border-radius:100px;
-    margin-bottom:2rem;
-  }
-  .hero-tag::before{
-    content:'';
-    width:6px;height:6px;border-radius:50%;
-    background:var(--green-light);
-  }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(212,168,67,0.1);
+      border: 1px solid rgba(212,168,67,0.28);
+      color: var(--gold);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
 
-  .hero h1{
-    font-size:clamp(2.6rem,7vw,5rem);
-    font-weight:600;
-    line-height:1.04;
-    margin-bottom:0.5rem;
-  }
-  .hero h1 .accent{
-    font-weight:900;
-    font-style:italic;
-    color:var(--red);
-  }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2.5s infinite;
+    }
 
-  .hero-sub{
-    max-width:480px;
-    margin:1.5rem auto 2.5rem;
-    color:var(--bone-dim);
-    font-size:1.02rem;
-  }
+    @keyframes pulse {
+      0%,100% { opacity:1; }
+      50% { opacity:0.4; }
+    }
 
-  .hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .hero-h1 {
+      font-family: var(--mono);
+      font-size: clamp(3.2rem, 9vw, 7rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
 
-  .btn{
-    display:inline-flex;align-items:center;gap:0.5rem;
-    padding:0.9rem 1.8rem;
-    border-radius:3px;
-    font-weight:600;
-    font-size:0.9rem;
-    text-decoration:none;
-    transition:transform 0.15s, background 0.2s;
-    border:none;
-    cursor:pointer;
-  }
-  .btn:hover{transform:translateY(-2px);}
+    .hero-h1 .outline {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--gold);
+    }
 
-  .btn-primary{ background:var(--red); color:var(--bone); }
-  .btn-primary:hover{ background:var(--red-dim); }
+    .hero-desc {
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      color: var(--dim);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
 
-  .btn-ghost{ background:transparent; color:var(--bone); border:1px solid #4A443C; }
-  .btn-ghost:hover{ border-color:var(--bone-dim); }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
 
-  .btn-whatsapp{ background:#25D366; color:#06210F; }
-  .btn-whatsapp:hover{ background:#1FB955; }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      border-radius: 3px;
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
 
-  /* ───── SECTION SHARED ───── */
-  .section{ padding:5.5rem 2.5rem; max-width:1080px; margin:0 auto; }
+    .btn-wa:hover { opacity: 0.88; }
 
-  .eyebrow{
-    font-size:0.72rem;
-    font-weight:700;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--red);
-    margin-bottom:0.6rem;
-  }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--light);
+      border: 1px solid var(--border2);
+      padding: 0.85rem 1.75rem;
+      border-radius: 3px;
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
 
-  .section-title{
-    font-size:clamp(1.8rem,4vw,2.6rem);
-    font-weight:600;
-    margin-bottom:2.8rem;
-  }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
-  /* ───── SERVICES ───── */
-  .services-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:1px;
-    background:#D8D0C0;
-    border:1px solid #D8D0C0;
-  }
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
 
-  .service-card{
-    background:var(--bone);
-    padding:2.2rem;
-    display:flex;
-    flex-direction:column;
-    gap:0.5rem;
-    transition:background 0.2s;
-  }
-  .service-card:hover{ background:#fff; }
+    .hero-stat-val {
+      font-family: var(--mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
 
-  .service-name{ font-family:'Fraunces',serif; font-size:1.3rem; font-weight:600; }
-  .service-desc{ font-size:0.88rem; color:#5A5247; flex:1; }
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 2px;
+      font-weight: 400;
+    }
 
-  .service-price{
-    font-family:'Fraunces',serif;
-    font-size:1.5rem;
-    font-weight:700;
-    color:var(--red);
-    margin-top:0.5rem;
-  }
+    /* ── GALLERY ── */
+    .gallery-section {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-  /* ───── BARBERS ───── */
-  .barbers-row{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:2rem;
-  }
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
 
-  .barber-card{ text-align:center; }
+    .section-title {
+      font-family: var(--mono);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2rem;
+      letter-spacing: -0.03em;
+    }
 
-  .barber-avatar{
-    width:96px;height:96px;
-    border-radius:50%;
-    margin:0 auto 1rem;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;
-    font-size:1.6rem;
-    font-weight:700;
-    color:var(--bone);
-    background:linear-gradient(135deg,var(--green),var(--green-light));
-    border:3px solid var(--bone);
-    box-shadow:0 0 0 1px #D8D0C0;
-  }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 10px;
+    }
 
-  .barber-name{ font-weight:700; font-size:1.05rem; }
-  .barber-role{ font-size:0.82rem; color:#7A7060; margin-bottom:0.5rem; }
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 4px;
+      position: relative;
+      background: var(--card);
+    }
 
-  .barber-specialty{
-    display:inline-block;
-    font-size:0.7rem;
-    font-weight:600;
-    letter-spacing:0.04em;
-    text-transform:uppercase;
-    color:var(--green);
-    background:rgba(47,69,56,0.08);
-    padding:0.25rem 0.7rem;
-    border-radius:100px;
-  }
+    .gallery-item.tall { grid-row: span 2; }
 
-  /* ───── REVIEWS ───── */
-  .reviews-row{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:1.5rem;
-  }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+      min-height: 200px;
+    }
 
-  .review-card{
-    background:#fff;
-    border:1px solid #E6DFD2;
-    border-radius:4px;
-    padding:1.75rem;
-    display:flex;
-    flex-direction:column;
-    gap:0.9rem;
-  }
+    .gallery-item:hover img { transform: scale(1.04); }
 
-  .stars{ color:var(--brass); font-size:0.85rem; letter-spacing:0.15em; }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,10,12,0.7) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
 
-  .review-text{ font-size:0.92rem; font-style:italic; color:#3A352E; flex:1; }
-  .review-name{ font-weight:700; font-size:0.85rem; }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
 
-  /* ───── CTA ───── */
-  .cta-section{
-    background:var(--ink);
-    color:var(--bone);
-    text-align:center;
-    padding:5rem 2.5rem;
-  }
+    .gallery-tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
 
-  .cta-section h2{ font-size:clamp(1.8rem,4vw,2.6rem); margin-bottom:0.75rem; }
-  .cta-sub{ color:var(--bone-dim); max-width:440px; margin:0 auto 2.2rem; }
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 2rem;
+    }
 
-  .info-strip{
-    margin-top:3.5rem;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:1px;
-    background:#3A332B;
-    border:1px solid #3A332B;
-    text-align:center;
-  }
-  .info-cell{ background:var(--charcoal-2); padding:1.5rem; }
-  .info-label{ font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--brass); margin-bottom:0.4rem; }
-  .info-value{ font-weight:600; font-size:0.95rem; }
+    /* ── SERVICES ── */
+    .services-section {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-  /* ───── FOOTER ───── */
-  footer{
-    background:var(--ink);
-    color:#7A7060;
-    text-align:center;
-    font-size:0.78rem;
-    padding:1.5rem;
-    border-top:1px solid #3A332B;
-  }
-  footer a{ color:var(--bone-dim); text-decoration:none; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
 
-  .demo-banner{
-    background:var(--brass);
-    color:var(--ink);
-    text-align:center;
-    font-size:0.78rem;
-    font-weight:600;
-    padding:0.6rem 1rem;
-  }
-  .demo-banner a{ color:var(--ink); text-decoration:underline; font-weight:700; }
+    .service-card {
+      background: var(--dark);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: background 0.2s;
+    }
 
-  /* ───── RESPONSIVE ───── */
-  @media (max-width:760px){
-    nav{padding:1rem 1.25rem;}
-    .nav-links{ gap:1rem; }
-    .nav-links a:not(.nav-book){ display:none; }
-    .hero{padding:3.5rem 1.25rem 4rem;}
-    .section{padding:4rem 1.25rem;}
-    .services-grid{grid-template-columns:1fr;}
-    .barbers-row{grid-template-columns:1fr;gap:2.5rem;}
-    .reviews-row{grid-template-columns:1fr;}
-    .info-strip{grid-template-columns:1fr;}
-  }
+    .service-card:hover { background: var(--card); }
 
-  @media (prefers-reduced-motion:reduce){
-    .ticker-track{ animation:none; }
-    .ticker-dot{ animation:none; }
-  }
-</style>
+    .service-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .service-name {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+    }
+
+    .service-desc {
+      font-size: 0.85rem;
+      color: var(--dim);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .service-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .service-price {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--gold);
+    }
+
+    .service-time {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    /* ── BARBERS ── */
+    .barbers-section {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .barbers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .barber-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .barber-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .barber-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--gold-glow);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin: 0 auto 1rem;
+    }
+
+    .barber-name {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+
+    .barber-role {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .barber-stars {
+      color: var(--gold);
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+    }
+
+    .barber-spec {
+      display: inline-block;
+      margin-top: 0.6rem;
+      background: var(--gold-glow);
+      border: 1px solid rgba(212,168,67,0.2);
+      color: var(--gold);
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      font-family: var(--mono);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── REVIEWS ── */
+    .reviews-section {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .review-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .review-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; }
+
+    .review-text {
+      font-size: 0.9rem;
+      color: var(--dim);
+      line-height: 1.75;
+      font-style: italic;
+      flex: 1;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .review-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .review-name {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .review-date {
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    /* ── CTA / BOOKING ── */
+    .cta-section {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .cta-inner {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-family: var(--mono);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    .cta-title em { color: var(--gold); font-style: normal; }
+
+    .cta-sub {
+      font-size: 0.95rem;
+      color: var(--dim);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .wa-big {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 1rem 2.25rem;
+      border-radius: 3px;
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .wa-big:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    /* ── INFO STRIP ── */
+    .info-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      max-width: 700px;
+      margin: 2.5rem auto 0;
+    }
+
+    .info-cell {
+      background: var(--dark);
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .info-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.35rem;
+    }
+
+    .info-val {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--light);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .footer-copy a { color: var(--gold); text-decoration: none; }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .built-by {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .built-by a { color: var(--gold); text-decoration: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero { padding: 7rem 1.25rem 4rem; }
+      .hero-stats { gap: 1.5rem; }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-item.tall { grid-row: span 1; }
+
+      .gallery-section,
+      .services-section,
+      .barbers-section,
+      .reviews-section { padding: 3.5rem 1.25rem; }
+
+      .divider { margin: 0 1.25rem; }
+
+      .footer { padding: 1.5rem 1.25rem; flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ── FADE IN ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
 
-<div class="demo-banner">
-  🪒 This is a demo site built by <a href="https://obito324hx.github.io/Portfolio/" target="_blank">Cletus Bwalya</a> — want one like it for your business? <a href="https://wa.me/260775580799?text=Hi%20Cletus%2C%20I%20saw%20the%20FreshCuts%20demo%20and%20I%27d%20like%20a%20website%20like%20this%20for%20my%20business." target="_blank">Message on WhatsApp →</a>
-</div>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Fresh<em>Cuts</em></a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#team">Barbers</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="https://wa.me/260000000000?text=Hi%2C%20I%27d%20like%20to%20book%20a%20cut%20at%20FreshCuts%21" target="_blank" class="nav-cta">Book Now</a></li>
+    </ul>
+    <div class="nav-hamburger" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
 
-<div class="ticker-bar">
-  <div class="ticker-track">
-    <span><span class="ticker-dot"></span> Walk-ins welcome — current wait ~10 min</span>
-    <span><span class="ticker-dot busy"></span> Saturday slots filling fast — book ahead</span>
-    <span>📍 Cairo Road, Lusaka</span>
-    <span>🕗 Open today until 7pm</span>
-    <span><span class="ticker-dot"></span> Walk-ins welcome — current wait ~10 min</span>
-    <span><span class="ticker-dot busy"></span> Saturday slots filling fast — book ahead</span>
-    <span>📍 Cairo Road, Lusaka</span>
-    <span>🕗 Open today until 7pm</span>
-  </div>
-</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge"><div class="badge-dot"></div> Open Now · Cairo Road, Lusaka</div>
+    <h1 class="hero-h1">
+      Look<br>
+      <span class="outline">Sharp.</span>
+    </h1>
+    <p class="hero-desc">
+      Lusaka's freshest cuts. Fades, shape-ups, beard trims — done right every time.
+      Walk in or book your slot on WhatsApp in seconds.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/260000000000?text=Hi%2C%20I%27d%20like%20to%20book%20a%20cut%20at%20FreshCuts%21" target="_blank" class="btn-wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Book via WhatsApp
+      </a>
+      <a href="#services" class="btn-ghost">View Services ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val">5+</div>
+        <div class="hero-stat-label">Years in Lusaka</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">3,200+</div>
+        <div class="hero-stat-label">Happy clients</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">4.9★</div>
+        <div class="hero-stat-label">Average rating</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">Walk-ins</div>
+        <div class="hero-stat-label">Always welcome</div>
+      </div>
+    </div>
+  </section>
 
-<nav>
-  <div class="logo">Fresh<span>Cuts</span></div>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#barbers">Barbers</a></li>
-    <li><a href="https://wa.me/260775580799" target="_blank" class="nav-book">Book Now</a></li>
-  </ul>
-</nav>
+  <hr class="divider"/>
 
-<section class="hero">
-  <div class="hero-tag">Now open on Cairo Road</div>
-  <h1>Look sharp.<br><span class="accent">Feel fresh.</span></h1>
-  <p class="hero-sub">
-    Lusaka's cleanest cuts. Walk in or book on WhatsApp — we'll have you in the chair fast.
-  </p>
-  <div class="hero-actions">
-    <a href="https://wa.me/260775580799?text=Hi%2C%20I%27d%20like%20to%20book%20a%20cut%20at%20FreshCuts." target="_blank" class="btn btn-whatsapp">💬 Book via WhatsApp</a>
-    <a href="#services" class="btn btn-ghost">View Services</a>
-  </div>
-</section>
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="section-eyebrow">our work</div>
+    <h2 class="section-title">Fresh out the chair.</h2>
 
-<section class="section" id="services">
-  <div class="eyebrow">What We Offer</div>
-  <h2 class="section-title">Our Services</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item tall reveal">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt="Clean fade haircut" loading="lazy"/>
+        <div class="gallery-overlay"><span class="gallery-tag">Low Fade</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://images.unsplash.com/photo-1521490683712-35a1cb235d1c?w=600&q=80" alt="Barbershop cut" loading="lazy"/>
+        <div class="gallery-overlay"><span class="gallery-tag">Taper</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&q=80" alt="Skin fade" loading="lazy"/>
+        <div class="gallery-overlay"><span class="gallery-tag">Skin Fade</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80" alt="Beard trim" loading="lazy"/>
+        <div class="gallery-overlay"><span class="gallery-tag">Beard Trim</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80" alt="Shape up cut" loading="lazy"/>
+        <div class="gallery-overlay"><span class="gallery-tag">Shape Up</span></div>
+      </div>
+    </div>
+  </section>
 
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-name">Fresh Cut</div>
-      <div class="service-desc">Clean fade, taper, or trim — your style, done right.</div>
-      <div class="service-price">K50</div>
-    </div>
-    <div class="service-card">
-      <div class="service-name">Shape Up</div>
-      <div class="service-desc">Crisp edge-up on hairline, beard, and sideburns.</div>
-      <div class="service-price">K30</div>
-    </div>
-    <div class="service-card">
-      <div class="service-name">Cut + Beard</div>
-      <div class="service-desc">Full haircut with beard trim and hot towel finish.</div>
-      <div class="service-price">K80</div>
-    </div>
-    <div class="service-card">
-      <div class="service-name">Kids Cut</div>
-      <div class="service-desc">Patient, careful cuts for boys under 12.</div>
-      <div class="service-price">K40</div>
-    </div>
-  </div>
-</section>
+  <hr class="divider"/>
 
-<section class="section" id="barbers">
-  <div class="eyebrow">The Team</div>
-  <h2 class="section-title">Meet Your Barbers</h2>
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-eyebrow">what we offer</div>
+    <h2 class="section-title">Services & Pricing</h2>
 
-  <div class="barbers-row">
-    <div class="barber-card">
-      <div class="barber-avatar">KB</div>
-      <div class="barber-name">Kelvin B.</div>
-      <div class="barber-role">Head Barber · 8 yrs</div>
-      <span class="barber-specialty">Fades & Tapers</span>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">✂️</div>
+        <div class="service-name">Fresh Cut</div>
+        <p class="service-desc">Clean fade, taper, or trim. Any style, done right. Includes a hot towel neck finish.</p>
+        <div class="service-meta">
+          <span class="service-price">K50</span>
+          <span class="service-time">~30 mins</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📐</div>
+        <div class="service-name">Shape Up</div>
+        <p class="service-desc">Crisp edge-up on hairline, beard, and sideburns. Makes an old cut look brand new.</p>
+        <div class="service-meta">
+          <span class="service-price">K30</span>
+          <span class="service-time">~15 mins</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🪒</div>
+        <div class="service-name">Cut + Beard</div>
+        <p class="service-desc">Full haircut with beard trim, shaping, and hot towel finish. The complete package.</p>
+        <div class="service-meta">
+          <span class="service-price">K80</span>
+          <span class="service-time">~45 mins</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">👦</div>
+        <div class="service-name">Kids Cut</div>
+        <p class="service-desc">Patient, careful cuts for boys under 12. We make sure they sit still and leave smiling.</p>
+        <div class="service-meta">
+          <span class="service-price">K40</span>
+          <span class="service-time">~25 mins</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">💆</div>
+        <div class="service-name">Scalp Treatment</div>
+        <p class="service-desc">Deep scalp massage with hot oil treatment. Good for growth and relaxation.</p>
+        <div class="service-meta">
+          <span class="service-price">K60</span>
+          <span class="service-time">~20 mins</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">💈</div>
+        <div class="service-name">Full Package</div>
+        <p class="service-desc">Cut, beard, edge-up, and scalp treatment. Walk in, walk out a new person.</p>
+        <div class="service-meta">
+          <span class="service-price">K130</span>
+          <span class="service-time">~75 mins</span>
+        </div>
+      </div>
     </div>
-    <div class="barber-card">
-      <div class="barber-avatar">CM</div>
-      <div class="barber-name">Chanda M.</div>
-      <div class="barber-role">Fade Specialist · 5 yrs</div>
-      <span class="barber-specialty">Sharp Lineups</span>
-    </div>
-    <div class="barber-card">
-      <div class="barber-avatar">TN</div>
-      <div class="barber-name">Tawanda N.</div>
-      <div class="barber-role">Beard Expert · 4 yrs</div>
-      <span class="barber-specialty">Hot Towel Finish</span>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="section">
-  <div class="eyebrow">What Clients Say</div>
-  <h2 class="section-title">Reviews</h2>
+  <hr class="divider"/>
 
-  <div class="reviews-row">
-    <div class="review-card">
-      <div class="stars">★★★★★</div>
-      <p class="review-text">"Best fade in Lusaka, no cap. I drive from Chilenje every two weeks."</p>
-      <div class="review-name">Mulenga K.</div>
-    </div>
-    <div class="review-card">
-      <div class="stars">★★★★★</div>
-      <p class="review-text">"Booked on WhatsApp, was in the chair 10 minutes after I arrived. Clean shop, sharp cut."</p>
-      <div class="review-name">Bwalya T.</div>
-    </div>
-    <div class="review-card">
-      <div class="stars">★★★★★</div>
-      <p class="review-text">"Brought my son here for the first time. The barber was patient and the cut was perfect."</p>
-      <div class="review-name">Patricia N.</div>
-    </div>
-  </div>
-</section>
+  <!-- BARBERS -->
+  <section class="barbers-section" id="team">
+    <div class="section-eyebrow">the team</div>
+    <h2 class="section-title">Meet Your Barbers</h2>
 
-<section class="cta-section">
-  <h2>Ready for a fresh cut?</h2>
-  <p class="cta-sub">Message us on WhatsApp — tell us your barber, your style, and when you're coming.</p>
-  <a href="https://wa.me/260775580799?text=Hi%2C%20I%27d%20like%20to%20book%20a%20cut%20at%20FreshCuts." target="_blank" class="btn btn-whatsapp">💬 Book on WhatsApp</a>
+    <div class="barbers-grid">
+      <div class="barber-card reveal">
+        <div class="barber-avatar">KB</div>
+        <div class="barber-name">Kelvin Banda</div>
+        <div class="barber-role">Head Barber · 8 years</div>
+        <div class="barber-stars">★★★★★</div>
+        <span class="barber-spec">Fades & Tapers</span>
+      </div>
+      <div class="barber-card reveal">
+        <div class="barber-avatar">CM</div>
+        <div class="barber-name">Chanda Mwale</div>
+        <div class="barber-role">Senior Barber · 5 years</div>
+        <div class="barber-stars">★★★★★</div>
+        <span class="barber-spec">Skin Fades</span>
+      </div>
+      <div class="barber-card reveal">
+        <div class="barber-avatar">TN</div>
+        <div class="barber-name">Tawanda Nkosi</div>
+        <div class="barber-role">Barber · 4 years</div>
+        <div class="barber-stars">★★★★★</div>
+        <span class="barber-spec">Beard Expert</span>
+      </div>
+      <div class="barber-card reveal">
+        <div class="barber-avatar">LM</div>
+        <div class="barber-name">Luka Mutale</div>
+        <div class="barber-role">Barber · 2 years</div>
+        <div class="barber-stars">★★★★☆</div>
+        <span class="barber-spec">Kids Cuts</span>
+      </div>
+    </div>
+  </section>
 
-  <div class="info-strip">
-    <div class="info-cell">
-      <div class="info-label">Location</div>
-      <div class="info-value">Cairo Road, Lusaka</div>
-    </div>
-    <div class="info-cell">
-      <div class="info-label">Hours</div>
-      <div class="info-value">Mon–Sat 8am–7pm</div>
-    </div>
-    <div class="info-cell">
-      <div class="info-label">Walk-ins</div>
-      <div class="info-value">Always welcome</div>
-    </div>
-  </div>
-</section>
+  <hr class="divider"/>
 
-<footer>
-  © 2026 FreshCuts · Lusaka, Zambia — Demo site built by <a href="https://obito324hx.github.io/Portfolio/" target="_blank">Cletus Bwalya</a>
-</footer>
+  <!-- REVIEWS -->
+  <section class="reviews-section" id="reviews">
+    <div class="section-eyebrow">what clients say</div>
+    <h2 class="section-title">People love FreshCuts.</h2>
+
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Best fade in Lusaka, no cap. I drive from Chilenje every two weeks just for Kelvin. The shop is clean, the music is good, and the cut is always perfect."</p>
+        <div class="review-author">
+          <div class="review-avatar">MK</div>
+          <div>
+            <div class="review-name">Mulenga K.</div>
+            <div class="review-date">2 weeks ago</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Booked on WhatsApp, was in the chair 10 minutes after I arrived. No waiting around. Clean shop, sharp cut, and the beard trim was immaculate."</p>
+        <div class="review-author">
+          <div class="review-avatar">BT</div>
+          <div>
+            <div class="review-name">Bwalya T.</div>
+            <div class="review-date">1 month ago</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Brought my son here for the first time. Luka was patient and made him feel comfortable. The cut was exactly what we asked for. We won't go anywhere else."</p>
+        <div class="review-author">
+          <div class="review-avatar">PN</div>
+          <div>
+            <div class="review-name">Patricia N.</div>
+            <div class="review-date">3 weeks ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / BOOKING -->
+  <section class="cta-section" id="book">
+    <div class="cta-inner">
+      <div class="badge" style="margin: 0 auto 1.5rem;"><div class="badge-dot"></div> Slots available today</div>
+      <h2 class="cta-title">Ready for a<br><em>fresh cut?</em></h2>
+      <p class="cta-sub">Message us on WhatsApp — tell us your barber, your style, and when you're coming in. We'll confirm your slot in minutes.</p>
+      <a href="https://wa.me/260000000000?text=Hi%20FreshCuts%21%20I%27d%20like%20to%20book%20a%20cut.%20My%20name%20is%20" target="_blank" class="wa-big">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Book on WhatsApp
+      </a>
+      <div class="info-strip">
+        <div class="info-cell">
+          <div class="info-label">Location</div>
+          <div class="info-val">Cairo Road, Lusaka</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-label">Hours</div>
+          <div class="info-val">Mon–Sat 8am–7pm</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-label">Sunday</div>
+          <div class="info-val">10am–4pm</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-label">Walk-ins</div>
+          <div class="info-val">Always welcome</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer">
+      <div>
+        <div class="nav-logo" style="margin-bottom:0.35rem;">Fresh<em style="color:var(--gold);font-style:normal;">Cuts</em></div>
+        <div class="built-by">Demo site built by <a href="https://obito324hx.github.io/Portfolio/" target="_blank">Cletus Bwalya</a> · Want one like this? <a href="https://wa.me/260775580799" target="_blank">Let's talk →</a></div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#gallery">Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#book">Book</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu(el) {
+      const links = document.querySelector('.nav-links');
+      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '60px';
+      links.style.right = '1.25rem';
+      links.style.background = 'rgba(8,10,12,0.97)';
+      links.style.border = '1px solid #1C2230';
+      links.style.padding = '1rem 1.5rem';
+      links.style.borderRadius = '4px';
+      links.style.gap = '1rem';
+      links.style.zIndex = '998';
+    }
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, (entry.target.dataset.delay || 0));
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach((el, i) => {
+      el.dataset.delay = (i % 4) * 80;
+      observer.observe(el);
+    });
+
+    const sections = document.querySelectorAll('[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 160) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--white)' : '';
+      });
+    });
+  </script>
 
 </body>
 </html>
